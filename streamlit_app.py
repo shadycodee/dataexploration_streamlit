@@ -70,18 +70,7 @@ elif selected == 'Dataset Overview':
 
 # Visual Representation Section
 elif selected == 'Visual Representation':
-    st.subheader('General Distribution using Histograms')
-
-    # Loop through each numeric column and plot histograms separately
-    numeric_cols = df.select_dtypes(include=['float64', 'int64']).columns  # Get numeric columns
-    for col in numeric_cols:
-        fig, ax = plt.subplots(figsize=(10, 6))
-        ax.hist(df[col], bins=30, color='blue', alpha=0.7)
-        ax.set_title(f'Histogram of {col}')
-        ax.set_xlabel(col)
-        ax.set_ylabel('Frequency')
-        st.pyplot(fig)  # Show the histogram in Streamlit
-
+    
     # Age Distribution
     st.subheader('Age Distribution')
     fig_age, ax_age = plt.subplots(figsize=(8, 5))
