@@ -70,47 +70,51 @@ elif selected == 'Dataset Overview':
 
 # Visual Representation Section
 elif selected == 'Visual Representation':
-    st.header('📈 Visual Representation')
-
-    # General Distribution using Histograms
     st.subheader('General Distribution using Histograms')
-    fig, ax = plt.subplots(figsize=(10, 8))
-    df.hist(ax=ax)
-    st.pyplot(fig)
+
+    # Loop through each numeric column and plot histograms separately
+    numeric_cols = df.select_dtypes(include=['float64', 'int64']).columns  # Get numeric columns
+    for col in numeric_cols:
+        fig, ax = plt.subplots(figsize=(10, 6))
+        ax.hist(df[col], bins=30, color='blue', alpha=0.7)
+        ax.set_title(f'Histogram of {col}')
+        ax.set_xlabel(col)
+        ax.set_ylabel('Frequency')
+        st.pyplot(fig)  # Show the histogram in Streamlit
 
     # Age Distribution
     st.subheader('Age Distribution')
-    fig, ax = plt.subplots(figsize=(8, 5))
-    sns.histplot(df['Age'], kde=True, color='red', ax=ax)
-    ax.set_title('Age Distribution')
-    ax.set_xlabel('Age')
-    ax.set_ylabel('Count')
-    st.pyplot(fig)
+    fig_age, ax_age = plt.subplots(figsize=(8, 5))
+    sns.histplot(df['Age'], kde=True, color='red', ax=ax_age)
+    ax_age.set_title('Age Distribution')
+    ax_age.set_xlabel('Age')
+    ax_age.set_ylabel('Count')
+    st.pyplot(fig_age)
 
     # Mental Health Status Distribution
     st.subheader('Mental Health Status Distribution')
-    fig, ax = plt.subplots(figsize=(6, 6))
-    df['Mental_Health_Status'].value_counts().plot.pie(autopct='%1.1f%%', colors=['#ff9999', '#66b3ff'], startangle=90, ax=ax)
-    ax.set_title('Mental Health Status Distribution')
-    ax.set_ylabel('')
-    st.pyplot(fig)
+    fig_mh, ax_mh = plt.subplots(figsize=(6, 6))
+    df['Mental_Health_Status'].value_counts().plot.pie(autopct='%1.1f%%', colors=['#ff9999', '#66b3ff'], startangle=90, ax=ax_mh)
+    ax_mh.set_title('Mental Health Status Distribution')
+    ax_mh.set_ylabel('')
+    st.pyplot(fig_mh)
 
     # Gender Distribution
     st.subheader('Gender Distribution')
-    fig, ax = plt.subplots(figsize=(6, 6))
-    df['Gender'].value_counts().plot.pie(autopct='%1.1f%%', colors=['#ff9999', '#66b3ff'], startangle=90, ax=ax)
-    ax.set_title('Gender Distribution')
-    ax.set_ylabel('')
-    st.pyplot(fig)
+    fig_gender, ax_gender = plt.subplots(figsize=(6, 6))
+    df['Gender'].value_counts().plot.pie(autopct='%1.1f%%', colors=['#ff9999', '#66b3ff'], startangle=90, ax=ax_gender)
+    ax_gender.set_title('Gender Distribution')
+    ax_gender.set_ylabel('')
+    st.pyplot(fig_gender)
 
     # Stress Level Distribution
     st.subheader('Stress Level Distribution')
-    fig, ax = plt.subplots(figsize=(8, 5))
-    sns.histplot(df['Stress_Level'], kde=True, color='green', ax=ax)
-    ax.set_title('Stress Level Distribution')
-    ax.set_xlabel('Stress Level')
-    ax.set_ylabel('Count')
-    st.pyplot(fig)
+    fig_stress, ax_stress = plt.subplots(figsize=(8, 5))
+    sns.histplot(df['Stress_Level'], kde=True, color='green', ax=ax_stress)
+    ax_stress.set_title('Stress Level Distribution')
+    ax_stress.set_xlabel('Stress Level')
+    ax_stress.set_ylabel('Count')
+    st.pyplot(fig_stress)
 
     # Assign numerical values to stress levels
     stress_mapping = {'Low': 1, 'Medium': 2, 'High': 3}
@@ -122,38 +126,39 @@ elif selected == 'Visual Representation':
 
     # Technology Usage vs Mental Health Status
     st.subheader('Technology Usage Hours vs Mental Health Status')
-    fig, ax = plt.subplots(figsize=(8, 5))
-    sns.boxplot(x='Mental_Health_Status', y='Technology_Usage_Hours', data=df, palette='Set2', ax=ax)
-    ax.set_title('Technology Usage Hours vs Mental Health Status')
-    ax.set_xlabel('Mental Health Status')
-    ax.set_ylabel('Technology Usage Hours')
-    st.pyplot(fig)
+    fig_tech, ax_tech = plt.subplots(figsize=(8, 5))
+    sns.boxplot(x='Mental_Health_Status', y='Technology_Usage_Hours', hue='Mental_Health_Status', data=df, palette='Set2', ax=ax_tech, legend=False)
+    ax_tech.set_title('Technology Usage Hours vs Mental Health Status')
+    ax_tech.set_xlabel('Mental Health Status')
+    ax_tech.set_ylabel('Technology Usage Hours')
+    st.pyplot(fig_tech)
 
     # Screen Time vs Mental Health Status
     st.subheader('Screen Time Hours vs Mental Health Status')
-    fig, ax = plt.subplots(figsize=(8, 5))
-    sns.boxplot(x='Screen_Time_Hours', y='Mental_Health_Status', data=df, palette='Set2', ax=ax)
-    ax.set_title('Screen Time Hours vs Mental Health Status')
-    ax.set_xlabel('Screen Time Hours')
-    ax.set_ylabel('Mental Health Status')
-    st.pyplot(fig)
+    fig_screen, ax_screen = plt.subplots(figsize=(8, 5))
+    sns.boxplot(x='Screen_Time_Hours', y='Mental_Health_Status', hue='Mental_Health_Status', data=df, palette='Set2', ax=ax_screen, legend=False)
+    ax_screen.set_title('Screen Time Hours vs Mental Health Status')
+    ax_screen.set_xlabel('Screen Time Hours')
+    ax_screen.set_ylabel('Mental Health Status')
+    st.pyplot(fig_screen)
 
     # Work Environment Impact by Mental Health Status
     st.subheader('Work Environment Impact by Mental Health Status')
-    fig, ax = plt.subplots(figsize=(8, 5))
-    sns.countplot(x='Work_Environment_Impact', hue='Mental_Health_Status', data=df, palette='Set3', ax=ax)
-    ax.set_title('Work Environment Impact by Mental Health Status')
-    ax.set_xlabel('Work Environment Impact')
-    ax.set_ylabel('Count')
-    st.pyplot(fig)
+    fig_work_env, ax_work_env = plt.subplots(figsize=(8, 5))
+    sns.countplot(x='Work_Environment_Impact', hue='Mental_Health_Status', data=df, palette='Set3', ax=ax_work_env)
+    ax_work_env.set_title('Work Environment Impact by Mental Health Status')
+    ax_work_env.set_xlabel('Work Environment Impact')
+    ax_work_env.set_ylabel('Count')
+    st.pyplot(fig_work_env)
 
     # Correlation Matrix and Heatmap
     st.subheader('Correlation Matrix and Heatmap')
     numerical_df = df.select_dtypes(include=['float64', 'int64'])  # Numeric columns only for correlation
     corr_matrix = numerical_df.corr()
-    fig, ax = plt.subplots(figsize=(10, 8))
-    sns.heatmap(corr_matrix, annot=True, cmap='coolwarm', ax=ax)
-    st.pyplot(fig)
+    fig_corr, ax_corr = plt.subplots(figsize=(10, 8))
+    sns.heatmap(corr_matrix, annot=True, cmap='coolwarm', ax=ax_corr)
+    st.pyplot(fig_corr)
+
 
 # Conclusion Section
 elif selected == 'Conclusion':
