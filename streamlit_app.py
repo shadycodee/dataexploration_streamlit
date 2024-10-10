@@ -91,7 +91,7 @@ elif selected == 'Visual Representation':
     # Gender Distribution
     st.subheader('Gender Distribution')
     fig_gender, ax_gender = plt.subplots(figsize=(6, 6))
-    df['Gender'].value_counts().plot.pie(autopct='%1.1f%%', colors=['#ff9999', '#66b3ff'], startangle=90, ax=ax_gender)
+    df['Gender'].value_counts().plot.pie(autopct='%1.1f%%', colors=['#008000','#66b3ff','#ff9999'], startangle=90, ax=ax_gender)
     ax_gender.set_title('Gender Distribution')
     ax_gender.set_ylabel('')
     st.pyplot(fig_gender)
