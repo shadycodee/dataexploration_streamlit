@@ -83,15 +83,29 @@ elif selected == 'Visual Representation':
     # Mental Health Status Distribution
     st.subheader('Mental Health Status Distribution')
     fig_mh, ax_mh = plt.subplots(figsize=(6, 6))
-    df['Mental_Health_Status'].value_counts().plot.pie(autopct='%1.1f%%', colors=['#ff9999', '#66b3ff'], startangle=90, ax=ax_mh)
+
+    # Define a color palette
+    colors = ['#ff9999', '#66b3ff', '#99ff99', '#ffcc99']  # Light red, light blue, light green, light orange
+
+    # Create the pie chart
+    df['Mental_Health_Status'].value_counts().plot.pie(
+        autopct='%1.1f%%',
+        colors=colors,
+        startangle=90,
+        ax=ax_mh
+    )
+
+    # Set title and remove y-label
     ax_mh.set_title('Mental Health Status Distribution')
     ax_mh.set_ylabel('')
+
+    # Display the plot
     st.pyplot(fig_mh)
 
     # Gender Distribution
     st.subheader('Gender Distribution')
     fig_gender, ax_gender = plt.subplots(figsize=(6, 6))
-    df['Gender'].value_counts().plot.pie(autopct='%1.1f%%', colors=['#008000','#66b3ff','#ff9999'], startangle=90, ax=ax_gender)
+    df['Gender'].value_counts().plot.pie(autopct='%1.1f%%', colors=['#99ff99','#66b3ff','#ff9999'], startangle=90, ax=ax_gender)
     ax_gender.set_title('Gender Distribution')
     ax_gender.set_ylabel('')
     st.pyplot(fig_gender)
